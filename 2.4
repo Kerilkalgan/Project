@@ -6,13 +6,8 @@ Date:  DB "09/11"
 start:
 	MOV C, Date   
 	MOV D, 232	
-	CALL print
-        HLT            
+	          
 
-print:			
-	PUSH A
-	PUSH B
-	MOV B, 0
 .loop:
 	MOV A, [C]	
 	MOV [D], A	
@@ -21,6 +16,3 @@ print:
 	CMP B, [C]	
 	JNZ .loop	
 
-	POP B
-	POP A
-	RET
