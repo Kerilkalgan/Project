@@ -1,0 +1,28 @@
+; Задание: написать подпрограмму, печатающую произвольное число в терминале (окно Output).
+
+
+	JMP start
+Date:  DB "7032016" 
+       DB 0	
+
+start:
+	MOV C, Date   
+	MOV D, 232	
+	CALL print
+        HLT             
+
+print:			
+	PUSH A
+	PUSH B
+	MOV B, 0
+.loop:
+	MOV A, [C]	
+	MOV [D], A	
+	INC C
+	INC D  
+	CMP B, [C]	
+	JNZ .loop	
+
+	POP B
+	POP A
+	RET
