@@ -1,12 +1,12 @@
 #include <stdio.h>
 int main (void)
 {
-	int day,month,x;
+	int day,month,sA;
 	day=9 ;
 	month=11;
-	x=day;
+	sA=day;
 	day=month;
-	month=x;
+	month=sA;
 	printf("%d/%d",day,month );
 return 0;
 }
