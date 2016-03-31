@@ -3,22 +3,13 @@ int main(void)
 {
 	printf("Данная программа выводит количество байт,которые отводятся под каждый тип данных\n");
 	printf("Тип               Размер в байтах\n");
-	printf("char                     1\n");
-	printf("unsigned char            1\n");
-	printf("signed char              1\n");
-	printf("int                   2 или 4\n");
-	printf("unsigned int          2 или 4\n");
-	printf("signet int            2 или 4\n");
-	printf("short int                2\n");
-	printf("unsigned short int       2\n");
-	printf("signed short int         2\n");
-	printf("long int                 4\n");
-	printf("long long int            8\n");
-	printf("signed long int          4\n");
-	printf("unsigned long int        4\n");
-	printf("unsigned long long int   8\n");
-	printf("float                    4\n");
-	printf("double                   8\n");
-	printf("long double             10\n");
+	printf("char                     %zd\n",sizeof (char));
+	printf("int                      %zd\n",sizeof (int));
+	printf("short int                %zd\n",sizeof (short int));
+	printf("long int                 %zd\n",sizeof (long int));
+	printf("long long int            %zd\n",sizeof (long long int));
+	printf("float                    %zd\n",sizeof (float));
+	printf("double                   %zd\n",sizeof (double));
+	printf("long double             %zd\n",sizeof (long double));
 	return 0;
 }
