@@ -27,7 +27,7 @@ int main(void)
     if (R>G && R>B && G>=B)
     {H=(60*(G-B)/D)+0;}
     if (R>G && R>B && G<B)
-    {H=(60*(G-B))+360;}
+    {H=(60*(G-B)/D)+360;}
     if (G>B && G>R)
     {H=(60*(B-R)/D)+120;}
     if (B>R && B>G)
