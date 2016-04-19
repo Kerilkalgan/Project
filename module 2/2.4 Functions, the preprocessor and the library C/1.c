@@ -1,19 +1,30 @@
 #include <stdio.h>
 
 int main(void) 
-{
-	float R,G,B,H,D,max,min,S;
-	char p;
+{	
+	int i,h=0,v=100;
+	float R,G,B,H,D,max,min,S;	
 	printf("Данная программа конвертирует цвет из пространства RGB в пространство HSV\n");
 	printf("Для этого достаточно задать координаты цвета, это могут быть числа от 0 до 255\n");
-	printf("\n   Введите их здесь (например, 23 56 255):");
+	while (i=1,i!=50)
+	{
+	printf("\n\n   Введите их здесь (например, 23 56 255):");
 	scanf("%f %f %f",&R,&G,&B);
-	p='%';
 	if (R>255 || G>255 || B>255)
 	{
 		printf("Ошибка!!!Возможно вы ввели координату(ы) > 255\n");
+	    return 0;
+		}
+	if (R==255 && G==255 && B==255)
+	{
+		printf(" Hue(H): %d\n Saturation(S): %d%%\n Value(V): %d%%\n Цвет белый", h,h,v);
 		return 0;
 		}
+	if (R==0 && G==0 && B==0)
+	{		
+		printf(" Hue(H): %d\n Saturation(S): %d%%\n Value(V): %d%%\n Цвет черный", h,h,h);
+	    return 0;
+		}	
 	// Выбор max и min
 	if (R>G && R>B) max = R;
 	if (G>R && G>B) max = G;
@@ -36,7 +47,7 @@ int main(void)
 	{S=0;}
 	else 
 	{S=1-min/max;}
-	printf("\n Hue(H): %f\n Saturation(S): %f%c\n Value(V): %f%c\n", H, S*100,p,max*100/255,p);	
+	printf(" Hue(H): %f\n Saturation(S): %f%%\n Value(V): %f%%\n", H, S*100,max*100/255);	
 	if (H==0 || H==359)
 	printf(" Оттенок красный");
 	if (H>0 && H<30)
@@ -69,5 +80,7 @@ int main(void)
 	printf(" Оттенок розовый");
 	if (H>300 && H<359)
 	printf(" Оттенок между розовым и красным");
-	return 0;
 	}
+	i++;
+return 0;
+}
