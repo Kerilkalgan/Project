@@ -7,7 +7,7 @@
 int i=0,j=0;
  char num_1[3];//для хранения очков
  char num_2[3];
- 
+int line_x = 320,line_y = 30; //кооринаты средней линии
 int ball_x = 320; //начальные координаты шарика
 int ball_y = 240;
 
@@ -43,7 +43,7 @@ void moveBall()//движение шара
     if (dir == 1 && ball_x > 5 && ball_y > 5)//если шарик в пределах поля игры для направления 1
     {
 
-         if( ball_x == p1_x + 15 && ball_y >= p1_y && ball_y <= p1_y + 100){//если шарик попадает в платформу 1
+         if( ball_x == p1_x + 15 && ball_y >= (p1_y-9) && ball_y <= p1_y + 100){//если шарик попадает в платформу 1
                   dir = rand()% 2 +3 ; // функция rand генерирует случайные числа, и шарик отбивается согласно путям 3 и 4
          }else{//продолжение перемещения в заданном направлении
                  --ball_x;
@@ -52,8 +52,8 @@ void moveBall()//движение шара
 
     } else if (dir == 2 && ball_x > 5 && ball_y < 475){//для направления 2
 
-         if( ball_x == p1_x + 15 && ball_y >= p1_y && ball_y <= p1_y + 100){
-                  dir = rand()% 2 + 3;
+         if( ball_x == p1_x + 15 && ball_y >= (p1_y-9) && ball_y <= p1_y + 100){ //от p1_y и далее от p2_y вычитаем 9,добавлено для того, чтобы
+                  dir = rand()% 2 + 3;                                           //при падении шарика сверху игрок смог его отбить(крайняя точка)
          }else{
                  --ball_x;
                  ++ball_y;
@@ -61,7 +61,7 @@ void moveBall()//движение шара
 
     } else if (dir == 3 && ball_x < 640 && ball_y > 5){
 
-         if( ball_x + 5 == p2_x && ball_y >= p2_y && ball_y <= p2_y + 100){
+         if( ball_x + 5 == p2_x && ball_y >= (p2_y-9) && ball_y <= p2_y + 100){
                   dir = rand()% 2 + 1;
          }else{
                  ++ball_x;
@@ -70,7 +70,7 @@ void moveBall()//движение шара
 
     } else if (dir == 4 && ball_x < 640 && ball_y < 475){
 
-         if( ball_x + 5 == p2_x && ball_y >= p2_y && ball_y <= p2_y + 100){
+         if( ball_x + 5 == p2_x && ball_y >= (p2_y-9) && ball_y <= p2_y + 100){
                   dir = rand()% 2 + 1;
          }else{
                  ++ball_x;
@@ -89,9 +89,10 @@ void moveBall()//движение шара
     circlefill ( buffer, ball_x, ball_y, 5, makecol( 120, 55, 255)); // рисуем шарик с центром (ball_x,ball_y) и радиусом = 5, и указываем цвет шарика makecol (формат RGB)  
     draw_sprite( screen, buffer, 0, 0);
     release_screen();
-    textout_ex( screen, font, "***PONG***", 255, 20, makecol( 0, 0, 0), makecol( 255, 255, 255));
-    textout_ex( screen, font, num_1, 285, 65, makecol( 255, 255, 0), makecol( 0, 0, 0)); // вывод табло со счетом,очки первого
-    textout_ex( screen, font, num_2, 305, 65, makecol( 255, 255, 0), makecol( 0, 0, 0)); // очки второго
+    textout_ex( screen, font, "***PONG***", 283, 20, makecol( 0, 0, 0), makecol( 255, 255, 0));
+    textout_ex( screen, font, num_1, 305, 65, makecol( 255, 255, 0), makecol( 0, 0, 0)); // вывод табло со счетом,очки первого
+    textout_ex( screen, font, num_2, 333, 65, makecol( 255, 255, 0), makecol( 0, 0, 0)); // очки второго
+    rectfill( buffer, line_x, line_y, line_x + 1, line_y + 480, makecol ( 240, 240, 240));// прорисовка средней линии
     rest(5);
 
 }
@@ -112,8 +113,8 @@ void p1Move(){ // управление платформой  1
     }
 
     acquire_screen();
-    rectfill( buffer, p1_tempX, p1_tempY, p1_tempX + 10, p1_tempY + 90, makecol ( 0, 0, 0));
-    rectfill( buffer, p1_x, p1_y, p1_x + 10, p1_y + 90, makecol ( 255, 255, 10)); //цвет первой платформы,и её размеры,координаты
+    rectfill( buffer, p1_tempX, p1_tempY, p1_tempX + 10, p1_tempY + 90, makecol ( 0, 0, 0));// при движении платформы, закрашивает черным его путь,для того чтобы видеть саму платформу
+    rectfill( buffer, p1_x, p1_y, p1_x + 10, p1_y + 90, makecol ( 255, 255, 0)); //цвет первой платформы,и её размеры,координаты
     release_screen();
 
 }
@@ -134,7 +135,7 @@ void p2Move(){ // управление платформой  2
 
     acquire_screen();
     rectfill( buffer, p2_tempX, p2_tempY, p2_tempX + 10, p2_tempY + 90, makecol ( 0, 0, 0));
-    rectfill( buffer, p2_x, p2_y, p2_x + 10, p2_y + 90, makecol ( 10, 255, 10));
+    rectfill( buffer, p2_x, p2_y, p2_x + 10, p2_y + 90, makecol ( 10, 255, 0));
     release_screen();
 
 }
@@ -162,16 +163,12 @@ void checkWin(){//Выявление победителя
 
  
     if ( ball_x < p1_x) 
-    {
-        //textout_ex( screen, font, "Player 2 Wins!", 240, 50, makecol( 255, 255, 255), makecol( 0, 0, 0));
-     
+    {     
         j++;        
         startNew();
         }
     if ( ball_x > p2_x)
-    {
-        //textout_ex( screen, font, "Player 1 Wins!", 240, 50, makecol( 255, 255, 255), makecol( 0, 0, 0));
-      
+    {      
         i++;
         startNew();
     }
@@ -185,20 +182,19 @@ void setupGame(){ //начальная прорисовка экрана
     acquire_screen();
     rectfill( buffer, p1_x, p1_y, p1_x + 10, p1_y + 90, makecol ( 255, 255, 0));
     rectfill( buffer, p2_x, p2_y, p2_x + 10, p2_y + 90, makecol ( 0, 255, 0));
+    rectfill( buffer, line_x, line_y, line_x + 1, line_y + 480, makecol ( 240, 240, 240));
     circlefill ( buffer, ball_x, ball_y, 5, makecol( 120, 55, 255));
    
     draw_sprite( screen, buffer, 0, 0);
     release_screen();
-    textout_ex( screen, font, "***PONG***", 255, 20, makecol( 0, 0, 0), makecol( 255, 255, 255));//начальная прорисовка названия игры
-    textout_ex( screen, font, "0", 285, 65, makecol( 255, 255, 0), makecol( 0, 0, 0)); // далее нулевого табло очков
-    textout_ex( screen, font, "0", 305, 65, makecol( 255, 255, 0), makecol( 0, 0, 0));
+    textout_ex( screen, font, "***PONG***", 280, 20, makecol( 0, 0, 0), makecol( 255, 255, 0));//начальная прорисовка названия игры
+    textout_ex( screen, font, "0", 305, 65, makecol( 255, 255, 0), makecol( 0, 0, 0)); // далее нулевого табло очков
+    textout_ex( screen, font, "0", 333, 65, makecol( 255, 255, 0), makecol( 0, 0, 0));    
     time(&secs);
     srand( (unsigned int)secs);
     
-    readkey(); //игра начнется только при нажатии клавиш 
- 
+    readkey(); //игра начнется только при нажатии клавиш  
     dir = rand() % 4 + 1; // здесь генирируется одно из четырех направлений движения в самом начале игры
-
 }
 
 int main(){
@@ -216,16 +212,19 @@ int main(){
     while( !key[KEY_ESC] && i<15 && j<15)   //Цикл игры, который можно прервать нажатив клавишу ESC 
 		                                     //или при достижении одного из игроков 15 очков игра прекращается
     {   
-		   while(key[KEY_P]);  // При нажатии клавиши P и удержании её игра будет остановлена
-			
+	  while(key[KEY_P]);  // При нажатии клавиши P и удержании её игра будет остановлена
+	  	
         p1Move();
         p2Move();
         moveBall();
         checkWin();
-
     }
-    printf("Финальный счет %d : %d",i,j);
+    if (i>j)
+    printf("Первый игрок выйграл со счетом %d : %d",i,j);
+    if (i<j)
+    printf("Второй игрок выйграл со счетом %d : %d",j,i);
+    if (i==j)
+    printf("Ничья со счетом %d : %d",i,j);
     return 0;
-
 }
 END_OF_MAIN();
